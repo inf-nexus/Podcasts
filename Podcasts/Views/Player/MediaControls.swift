@@ -28,20 +28,18 @@ class MediaControls: UIView {
         self._rewindPressed = _rewindPressed
         self._fastForwardPressed = _fastForwardPressed
                 
-        setupContainerView()
-        setupArrangedSubViews()
+        configureContainerView()
+        layoutContainerView()
+        
+        configureArrangedSubViews()
+        layoutArrangedSubViews()
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupContainerView() {
-        configureContainerView()
-        layoutContainerView()
-    }
-    
-    func configureContainerView() {
+    private func configureContainerView() {
         containerView = UIStackView()
         containerView.axis = .horizontal
         containerView.alignment = .center
@@ -49,16 +47,14 @@ class MediaControls: UIView {
         addSubview(containerView)
     }
     
-    func layoutContainerView() {
-        containerView.fillSuperview()
+    private func layoutContainerView() {
+        let horizontalPadding: CGFloat = 40
+        containerView
+        .fillSuperview(paddingLeft: horizontalPadding, paddingRight: horizontalPadding)
+        .centerHorizontally()
     }
     
-    func setupArrangedSubViews() {
-        configureArrangedSubViews()
-        layoutArrangedSubViews()
-    }
-    
-    func configureArrangedSubViews() {
+    private func configureArrangedSubViews() {
                 
         rewind15Button = UIButton()
         rewind15Button.setImageIcon(icon: .gobackward15)
@@ -77,17 +73,14 @@ class MediaControls: UIView {
         fastForward15Button.tintColor = UIColor.white.withAlphaComponent(0.85)
         fastForward15Button.scaleToFill()
         fastForward15Button.addTarget(self, action: #selector(fastForwardPressed), for: .touchUpInside)
-        
-        let leftSpacer = UIView()
-        let rightSpacer = UIView()
 
-        [leftSpacer, rewind15Button, playButton, fastForward15Button, rightSpacer].forEach({
+        [rewind15Button, playButton, fastForward15Button].forEach({
             containerView.addArrangedSubview($0)
         })
         
     }
     
-    func layoutArrangedSubViews() {
+    private func layoutArrangedSubViews() {
         
         rewind15Button
             .anchorHeight(to: heightAnchor, scale: 0.3)

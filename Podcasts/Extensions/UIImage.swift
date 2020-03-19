@@ -16,7 +16,9 @@ extension UIImage {
         case goforward15 = "goforward.15"
         case chevronDown = "chevron.down"
         case ellipsis = "ellipsis"
-        
+        case house = "house"
+        case magnifyingglass = "magnifyingglass"
+        case arrowDownToLineAlt = "arrow.down.to.line.alt"
     }
     
     convenience init?(icon: imageIcon) {

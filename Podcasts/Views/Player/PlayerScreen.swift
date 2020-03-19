@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlayerViewController: UIViewController {
+class PlayerScreen: UIView {
     
     var coverImage: LoadableImage!
     var episodeDetails: EpisodeDetails!
@@ -19,96 +19,120 @@ class PlayerViewController: UIViewController {
     var podcastEpisodeTitle = "MISSING Crazy Crime Story"
     var podcastAuthorTitle = "Serial"
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        navigationController?.navigationBar.barStyle = .black
-        navigationController?.navigationBar.shadowImage = .none
+    init() {
+        super.init(frame: .zero)
         
         setupBackgroundColor()
         configureNavigationBar()
         setupViews()
+        setupDragGesure()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    func setupBackgroundColor() {
+    private func setupBackgroundColor() {
         
-        view.backgroundColor = .white
+        backgroundColor = .white
 
         let colorView = UIView()
-        view.addSubview(colorView)
+        addSubview(colorView)
         colorView.fillSuperview()
         colorView.backgroundColor = UIColor.black.withAlphaComponent(0.85)
         
     }
     
-    func configureNavigationBar() {
+    private func configureNavigationBar() {
         
-        navigationController?.disableBackgroundVisibility()
+//        navigationController?.disableBackgroundVisibility()
                 
         let collapseImage = UIImage(icon: .chevronDown)
         let leftBarButtonItem = UIBarButtonItem(image: collapseImage , style: .plain, target: self, action: nil)
         leftBarButtonItem.tintColor = .white
-        navigationItem.leftBarButtonItem = leftBarButtonItem
-        
-        navigationItem.title = podcastTitle
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        navigationItem.leftBarButtonItem = leftBarButtonItem
+//
+//        navigationItem.title = podcastTitle
+//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
         
         
         let moreImage = UIImage(icon: .ellipsis)
         let rightBarButtonItem = UIBarButtonItem(image: moreImage , style: .plain, target: self, action: nil)
         rightBarButtonItem.tintColor = .white
-        navigationItem.rightBarButtonItem = rightBarButtonItem
+//        navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
-    func setupViews() {
+    private func setupViews() {
         configureViews()
         layoutViews()
     }
     
-    func configureViews() {
+    private func configureViews() {
         
         coverImage = LoadableImage()
-        view.addSubview(coverImage)
+        addSubview(coverImage)
         
         episodeDetails = EpisodeDetails(episodeTitle: podcastEpisodeTitle, episodeAuthor: podcastAuthorTitle)
-        view.addSubview(episodeDetails)
+        addSubview(episodeDetails)
         
         scrubber = Scrubber()
-        view.addSubview(scrubber)
+        addSubview(scrubber)
     
         mediaControls = MediaControls(_playPressed: playPressed, _rewindPressed: rewindPressed, _fastForwardPressed: fastForwardPressed)
-        view.addSubview(mediaControls)
+        addSubview(mediaControls)
                 
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         
         coverImage
-            .anchorTop(to: view.safeAreaLayoutGuide.topAnchor, padding: 50)
-            .anchorWidth(to: view.layoutMarginsGuide.widthAnchor)
-            .anchorHeight(to: view.layoutMarginsGuide.widthAnchor)
+            .anchorTop(to: safeAreaLayoutGuide.topAnchor, padding: 50)
+            .anchorWidth(to: layoutMarginsGuide.widthAnchor)
+            .anchorHeight(to: layoutMarginsGuide.widthAnchor)
             .centerHorizontally()
         
         episodeDetails
             .anchorTop(to: coverImage.bottomAnchor, padding: 60)
-            .anchorWidth(to: view.layoutMarginsGuide.widthAnchor)
+            .anchorWidth(to: layoutMarginsGuide.widthAnchor)
             .centerHorizontally()
         
         scrubber
             .anchorTop(to: episodeDetails.bottomAnchor, padding: 10)
-            .anchorWidth(to: view.layoutMarginsGuide.widthAnchor)
+            .anchorWidth(to: layoutMarginsGuide.widthAnchor)
             .centerHorizontally()
                 
         mediaControls
             .anchorTop(to: scrubber.bottomAnchor, padding: 20)
-            .anchorHeight(to: view.layoutMarginsGuide.heightAnchor, scale: 0.14)
-            .anchorWidth(to: view.layoutMarginsGuide.widthAnchor)
+            .anchorHeight(to: layoutMarginsGuide.heightAnchor, scale: 0.14)
+            .anchorWidth(to: layoutMarginsGuide.widthAnchor)
             .centerHorizontally()
+    }
+    
+    private func setupDragGesure() {
+        
+        let dragGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(dragGesture))
+        
+        addGestureRecognizer(dragGestureRecognizer)
+        
+    }
+    
+    @objc private func dragGesture(gesture: UIPanGestureRecognizer) {
+        
+        if gesture.state == .began {
+                        
+        } else if gesture.state == .changed {
+            
+            let translation = gesture.translation(in: superview)
+                        
+            transform = CGAffineTransform(translationX: 0, y: translation.y)
+            
+        } else if gesture.state == .ended {
+            
+            UIView.animate(withDuration: 0.3) {
+                 self.transform = .identity
+            }
+        }
+        
     }
     
     func playPressed(_ sender: UIButton) {

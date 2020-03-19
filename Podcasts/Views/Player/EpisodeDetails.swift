@@ -23,8 +23,6 @@ class EpisodeDetails: UIView {
         self.episodeAuthor = episodeAuthor
         
         setupViews()
-        
-    
     }
     
     required init?(coder: NSCoder) {
