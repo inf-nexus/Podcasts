@@ -52,7 +52,7 @@ class PlayerScreen: UIView {
     
     private func configureViews() {
         
-        playerNavigationBar = PlayerNavigationBar()
+        playerNavigationBar = PlayerNavigationBar(delegate: self)
         addSubview(playerNavigationBar)
         
         coverImage = LoadableImage()
@@ -61,10 +61,10 @@ class PlayerScreen: UIView {
         episodeDetails = EpisodeDetails(episodeTitle: podcastEpisodeTitle, episodeAuthor: podcastAuthorTitle)
         addSubview(episodeDetails)
         
-        scrubber = Scrubber()
+        scrubber = Scrubber(delegate: self)
         addSubview(scrubber)
     
-        mediaControls = MediaControls(_playPressed: playPressed, _rewindPressed: rewindPressed, _fastForwardPressed: fastForwardPressed)
+        mediaControls = MediaControls(delegate: self)
         addSubview(mediaControls)
                 
     }
@@ -126,17 +126,41 @@ class PlayerScreen: UIView {
         }
         
     }
-    
-    func playPressed(_ sender: UIButton) {
-        print("play pressed!")
-    }
-    
-    func rewindPressed(_ sender: UIButton) {
-        print("rewind pressed!")
-    }
-    
-    func fastForwardPressed(_ sender: UIButton) {
-        print("fast forward pressed!")
-    }
 
 }
+
+extension PlayerScreen: PlayerNavigationBarDelegate {
+    func playerNavigationBar(didSelectMinimize button: UIButton) {
+        print("minimize pressed")
+    }
+    
+    func playerNavigationBar(didSelectMore button: UIButton) {
+        print("more pressed")
+    }
+    
+}
+
+extension PlayerScreen: ScrubberDelegate {
+    func scrubber(didChange value: Float) {
+        print("scrubber value changed: \(value)")
+    }
+}
+
+extension PlayerScreen: MediaControlsDelegate {
+    func mediaControls(didPressPlay button: UIButton) {
+        print("play pressed")
+    }
+    
+    func mediaControls(didPressRewind button: UIButton) {
+        print("rewind pressed")
+
+    }
+    
+    func mediaControls(didPressFastForward button: UIButton) {
+        print("fastforward pressed")
+
+    }
+    
+}
+
+

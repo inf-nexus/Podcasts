@@ -8,7 +8,16 @@
 
 import UIKit
 
+protocol PlayerNavigationBarDelegate {
+    func playerNavigationBar(didSelectMinimize button: UIButton)
+    
+    func playerNavigationBar(didSelectMore button: UIButton)
+
+}
+
 class PlayerNavigationBar: UIView {
+    
+    var delegate: PlayerNavigationBarDelegate!
     
     private var containerView: UIStackView!
     private var minimizeButton: UIButton!
@@ -17,8 +26,11 @@ class PlayerNavigationBar: UIView {
     
     var playerTitle = "Serial"
     
-    override init(frame: CGRect = .zero) {
+    init(delegate: PlayerNavigationBarDelegate, frame: CGRect = .zero) {
         super.init(frame: frame)
+        
+        self.delegate = delegate
+        
         configureContainerView()
         layoutContainerView()
         configureNavigationContent()
@@ -46,6 +58,7 @@ class PlayerNavigationBar: UIView {
         minimizeButton.setImageIcon(icon: .chevronDown)
         minimizeButton.scaleToFit()
         minimizeButton.tintColor = .white
+        minimizeButton.addTarget(self, action: #selector(handleMinimizeButtonPressed(button:)), for: .touchUpInside)
         
         playerTitleLabel = UILabel()
         playerTitleLabel.text = playerTitle
@@ -55,6 +68,7 @@ class PlayerNavigationBar: UIView {
         moreButton.setImageIcon(icon: .ellipsis)
         moreButton.scaleToFit()
         moreButton.tintColor = .white
+        moreButton.addTarget(self, action: #selector(handleMoreButtonPressed(button:)), for: .touchUpInside)
         
         [minimizeButton, playerTitleLabel, moreButton].forEach({
             containerView.addArrangedSubview($0)
@@ -77,4 +91,12 @@ class PlayerNavigationBar: UIView {
 
     }
     
+    @objc func handleMinimizeButtonPressed(button: UIButton) {
+        delegate.playerNavigationBar(didSelectMinimize: button)
+    }
+    
+    @objc func handleMoreButtonPressed(button: UIButton) {
+        delegate.playerNavigationBar(didSelectMore: button)
+     }
+     
 }

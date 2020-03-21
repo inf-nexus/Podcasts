@@ -8,6 +8,14 @@
 
 import UIKit
 
+protocol MediaControlsDelegate {
+    
+    func mediaControls(didPressPlay button: UIButton)
+    func mediaControls(didPressRewind button: UIButton)
+    func mediaControls(didPressFastForward button: UIButton)
+    
+}
+
 class MediaControls: UIView {
     
     var containerView: UIStackView!
@@ -15,18 +23,13 @@ class MediaControls: UIView {
     var rewind15Button: UIButton!
     var fastForward15Button: UIButton!
     
-    var _playPressed: ((UIButton) -> Void)?
-    var _rewindPressed: ((UIButton) -> Void)?
-    var _fastForwardPressed: ((UIButton) -> Void)?
+    var delegate: MediaControlsDelegate!
 
-    init(_playPressed: @escaping (UIButton) -> Void,
-         _rewindPressed: @escaping (UIButton) -> Void,
-         _fastForwardPressed: @escaping (UIButton) -> Void) {
+    init(delegate: MediaControlsDelegate) {
         
         super.init(frame: .zero)
-        self._playPressed = _playPressed
-        self._rewindPressed = _rewindPressed
-        self._fastForwardPressed = _fastForwardPressed
+        
+        self.delegate = delegate
                 
         configureContainerView()
         layoutContainerView()
@@ -96,15 +99,15 @@ class MediaControls: UIView {
     }
     
     @objc func playPressed(_ sender: UIButton) {
-        _playPressed?(sender)
+        delegate.mediaControls(didPressPlay: sender)
     }
     
     @objc func rewindPressed(_ sender: UIButton) {
-        _rewindPressed?(sender)
+        delegate.mediaControls(didPressRewind: sender)
     }
     
     @objc func fastForwardPressed(_ sender: UIButton) {
-        _fastForwardPressed?(sender)
+        delegate.mediaControls(didPressFastForward: sender)
     }
     
 }

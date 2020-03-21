@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol ScrubberDelegate {
+    
+    func scrubber(didChange value: Float)
+    
+}
+
 class Scrubber: UIView {
+    
+    var delegate: ScrubberDelegate!
     
     var slider: UISlider!
     var timeContainer: UIView!
@@ -18,8 +26,10 @@ class Scrubber: UIView {
     var currentTime: Int = 0
     var remainingTime: Int = 0
 
-    init() {
+    init(delegate: ScrubberDelegate) {
         super.init(frame: .zero)
+        
+        self.delegate = delegate
                 
         setupViews()
     }
@@ -37,6 +47,7 @@ class Scrubber: UIView {
         
         slider = UISlider()
         slider.tintColor = .white
+        slider.addTarget(self, action: #selector(handleScrubberChange), for: .valueChanged)
         addSubview(slider)
         
         currentTimeLabel = ScrubberLabel()
@@ -70,6 +81,12 @@ class Scrubber: UIView {
 
         anchorBottom(to: timeContainer.bottomAnchor)
         
+    }
+    
+    @objc func handleScrubberChange(slider: UISlider) {
+        
+        let value = slider.value
+        delegate.scrubber(didChange: value)
     }
     
 }
