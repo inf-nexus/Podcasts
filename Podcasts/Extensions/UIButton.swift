@@ -13,7 +13,13 @@ extension UIButton {
     func scaleToFill() {
         contentHorizontalAlignment = .fill
         contentVerticalAlignment = .fill
-        imageView?.contentMode = .scaleToFill
+        imageView?.contentMode = .scaleAspectFill
+    }
+    
+    func scaleToFit() {
+        contentHorizontalAlignment = .center
+        contentVerticalAlignment = .center
+        imageView?.contentMode = .scaleAspectFit
     }
     
     func setImageIcon(icon: UIImage.imageIcon, for controlState: UIControl.State = .normal) {

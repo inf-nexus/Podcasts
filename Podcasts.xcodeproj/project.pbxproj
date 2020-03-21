@@ -15,6 +15,7 @@
 		74291EE02415DE9000272B8C /* DownloadsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74291EDF2415DE9000272B8C /* DownloadsController.swift */; };
 		748E92E62422DABE00E3182C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E92E52422DABE00E3182C /* TabBarController.swift */; };
 		749D5D592410069D009FAB3E /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749D5D582410069D009FAB3E /* UIButton.swift */; };
+		74B7C0592423D1E200276E6B /* PlayerNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B7C0582423D1E200276E6B /* PlayerNavigationBar.swift */; };
 		74DA29D82411AF8C006050F8 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DA29D72411AF8C006050F8 /* UIImage.swift */; };
 		74DA29DA2411B52B006050F8 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DA29D92411B52B006050F8 /* UINavigationController.swift */; };
 		74DA29DC2411B76F006050F8 /* LoadableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DA29DB2411B76F006050F8 /* LoadableImage.swift */; };
@@ -39,6 +40,7 @@
 		74291EDF2415DE9000272B8C /* DownloadsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsController.swift; sourceTree = "<group>"; };
 		748E92E52422DABE00E3182C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		749D5D582410069D009FAB3E /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		74B7C0582423D1E200276E6B /* PlayerNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNavigationBar.swift; sourceTree = "<group>"; };
 		74DA29D72411AF8C006050F8 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		74DA29D92411B52B006050F8 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		74DA29DB2411B76F006050F8 /* LoadableImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableImage.swift; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 				74DA29DB2411B76F006050F8 /* LoadableImage.swift */,
 				74DA29DD2411BE81006050F8 /* EpisodeDetails.swift */,
 				74DA29DF2411DA1C006050F8 /* Scrubber.swift */,
+				74B7C0582423D1E200276E6B /* PlayerNavigationBar.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				74DA29D82411AF8C006050F8 /* UIImage.swift in Sources */,
 				742179A3240CBA2E0096A28F /* PlayerScreen.swift in Sources */,
 				742179A5240CBB380096A28F /* MediaControls.swift in Sources */,
+				74B7C0592423D1E200276E6B /* PlayerNavigationBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

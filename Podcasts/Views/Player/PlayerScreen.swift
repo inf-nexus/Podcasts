@@ -10,6 +10,7 @@ import UIKit
 
 class PlayerScreen: UIView {
     
+    var playerNavigationBar: PlayerNavigationBar!
     var coverImage: LoadableImage!
     var episodeDetails: EpisodeDetails!
     var scrubber: Scrubber!
@@ -22,8 +23,9 @@ class PlayerScreen: UIView {
     init() {
         super.init(frame: .zero)
         
+        layoutMargins = UIEdgeInsets(top: safeAreaInsets.top, left: 30, bottom: safeAreaInsets.bottom, right: 30)
+        
         setupBackgroundColor()
-        configureNavigationBar()
         setupViews()
         setupDragGesure()
     }
@@ -43,31 +45,15 @@ class PlayerScreen: UIView {
         
     }
     
-    private func configureNavigationBar() {
-        
-//        navigationController?.disableBackgroundVisibility()
-                
-        let collapseImage = UIImage(icon: .chevronDown)
-        let leftBarButtonItem = UIBarButtonItem(image: collapseImage , style: .plain, target: self, action: nil)
-        leftBarButtonItem.tintColor = .white
-//        navigationItem.leftBarButtonItem = leftBarButtonItem
-//
-//        navigationItem.title = podcastTitle
-//        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        
-        
-        let moreImage = UIImage(icon: .ellipsis)
-        let rightBarButtonItem = UIBarButtonItem(image: moreImage , style: .plain, target: self, action: nil)
-        rightBarButtonItem.tintColor = .white
-//        navigationItem.rightBarButtonItem = rightBarButtonItem
-    }
-    
     private func setupViews() {
         configureViews()
         layoutViews()
     }
     
     private func configureViews() {
+        
+        playerNavigationBar = PlayerNavigationBar()
+        addSubview(playerNavigationBar)
         
         coverImage = LoadableImage()
         addSubview(coverImage)
@@ -85,8 +71,14 @@ class PlayerScreen: UIView {
     
     private func layoutViews() {
         
+        playerNavigationBar
+            .anchorTop(to: layoutMarginsGuide.topAnchor)
+            .anchorWidth(to: layoutMarginsGuide.widthAnchor)
+            .setHeight(50)
+            .centerHorizontally()
+        
         coverImage
-            .anchorTop(to: safeAreaLayoutGuide.topAnchor, padding: 50)
+            .anchorTop(to: playerNavigationBar.bottomAnchor, padding: 30)
             .anchorWidth(to: layoutMarginsGuide.widthAnchor)
             .anchorHeight(to: layoutMarginsGuide.widthAnchor)
             .centerHorizontally()
